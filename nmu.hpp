@@ -18,7 +18,7 @@ namespace nmu {
    * ============================
    */
   template <typename T> class vec2_t {
-    static_assert( std::is_arithmetic<T>::value, "Type is not arithmetic." );
+    static_assert( std::is_arithmetic<T>::value, "Type is not arithmetic" );
 
   private:
   public:
@@ -42,12 +42,19 @@ namespace nmu {
     }
 
     [[nodiscard]] const T & length( ) const noexcept {
-      nmu_assert( is_valid( ), "Vector is invalid." );
+      nmu_assert( is_valid( ), "Vector is invalid" );
+      // C4172
       return std::sqrt( std::pow( x, 2 ) + std::pow( y, 2 ) );
     }
 
+    [[nodiscard]] const T & dot( const vec2_t<T> & _ ) const noexcept {
+      nmu_assert( is_valid( ), "Vector is invalid" );
+      // C4172
+      return x * _.x + y * _.y;
+    }
+
     void normalize( ) noexcept {
-      nmu_assert( is_valid( ), "Vector is invalid." );
+      nmu_assert( is_valid( ), "Vector is invalid" );
       if ( const float _length = length( ); std::isnormal( _length ) ) {
         x /= _length;
         y /= _length;
@@ -63,6 +70,7 @@ namespace nmu {
       return ( (T *)this )[ _ ];
     }
 
+    // Warning:(73, 25) Clang-Tidy: Operator=() does not handle self-assignment properly
     vec2_t<T> & operator=( const vec2_t<T> & _ ) noexcept {
       if ( &_ != this ) {
         x = _.x;
