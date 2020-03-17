@@ -1,0 +1,21 @@
+neg4n's math utils
+==================
+
+this project is header-only
+c++17 library written in modern way.
+
+in order to use it, add nmu.hpp to your project
+or get it through git submodules (https://git-scm.com/book/en/v2/Git-Tools-Submodules)
+
+fell free to contribute.
+
+disclaimer:
+===========
+this project:
+- sometimes does work,
+- may or may not contain gluten,
+- may or may not contain traces of nuts,
+- may or may not randomly injure people in a 15 meter radius, and
+- may or may not be safe for children under the age of 12
+
+made on earth by human (under mit license)
