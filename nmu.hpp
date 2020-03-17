@@ -30,10 +30,6 @@ namespace nmu {
     constexpr explicit vec2_t( const std::pair<T, T> & source )
         : x( source.first ), y( source.second ){};
 
-    [[deprecated( "see: is_valid()" )]] [[nodiscard]] bool is_zero( ) const noexcept {
-      return x == 0 && y == 0;
-    }
-
     [[nodiscard]] bool margin_is_zero( const float margin /* = 0.1f */ ) const noexcept {
       return x > -margin && x < margin && y > -margin && y < margin;
     }
