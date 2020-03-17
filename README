@@ -6,7 +6,7 @@ c++17 library written in modern way.
 
 in order to use it, add nmu.hpp to your project
 or get it through git submodules
-fell free to contribute.
+feel free to contribute.
 
 features:
  - support for all arithmetic types
