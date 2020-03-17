@@ -23,35 +23,51 @@ namespace nmu {
   private:
   public:
     T x = 0, y = 0;
+
     constexpr vec2_t( ) = default;
     constexpr vec2_t( const T & x, const T & y ) : x( x ), y( y ){};
     constexpr explicit vec2_t( T * source ) : x( source[ 0 ] ), y( source[ 1 ] ){};
     constexpr explicit vec2_t( const std::pair<T, T> & source )
         : x( source.first ), y( source.second ){};
 
-    [[deprecated( "see: is_valid()" )]] [[nodiscard]] constexpr bool is_zero( ) const noexcept {
+    [[deprecated( "see: is_valid()" )]] [[nodiscard]] bool is_zero( ) const noexcept {
       return x == 0 && y == 0;
     }
-    [[nodiscard]] constexpr bool margin_is_zero( const float margin /* = 0.1f */ ) const noexcept {
+
+    [[nodiscard]] bool margin_is_zero( const float margin /* = 0.1f */ ) const noexcept {
       return x > -margin && x < margin && y > -margin && y < margin;
     }
-    [[nodiscard]] constexpr bool is_valid( ) const noexcept {
+
+    [[nodiscard]] bool is_valid( ) const noexcept {
       if constexpr ( std::is_floating_point<T>::value )
         return std::isnormal( x ) && std::isnormal( y );
       else
         return x != 0 && y != 0;
     }
 
-    void clear( ) noexcept {
-      x = 0;
-      y = 0;
+    [[nodiscard]] const T & length( ) const noexcept {
+      nmu_assert( is_valid( ), "Vector is invalid." );
+      return std::sqrt( std::pow( x, 2 ) + std::pow( y, 2 ) );
     }
 
-    [[nodiscard]] constexpr T & operator[]( const std::uint8_t & _ ) const noexcept {
-      nmu_assert( _ >= 0 && _ < 2, "Number must be between 0 and 1" )
+    void normalize( ) noexcept {
+      nmu_assert( is_valid( ), "Vector is invalid." );
+      if ( const float _length = length( ); std::isnormal( _length ) ) {
+        x /= _length;
+        y /= _length;
+      } else {
+        clear( );
+      }
+    }
+
+    void clear( ) noexcept { x = y = 0; }
+
+    T & operator[]( const std::uint8_t & _ ) const noexcept {
+      nmu_assert( _ >= 0 && _ < 2, "Number must be between 0 and 1" );
       return ( (T *)this )[ _ ];
     }
-    constexpr vec2_t<T> & operator=( const vec2_t<T> & _ ) noexcept {
+
+    vec2_t<T> & operator=( const vec2_t<T> & _ ) noexcept {
       if ( &_ != this ) {
         x = _.x;
         y = _.y;
@@ -59,10 +75,11 @@ namespace nmu {
       return *this;
     }
 
-    [[nodiscard]] constexpr bool operator==( const vec2_t<T> & _ ) const noexcept {
+    [[nodiscard]] bool operator==( const vec2_t<T> & _ ) const noexcept {
       return _.x == x && _.y == y;
     }
-    [[nodiscard]] constexpr bool operator!=( const vec2_t<T> & _ ) const noexcept {
+
+    [[nodiscard]] bool operator!=( const vec2_t<T> & _ ) const noexcept {
       return _.x != x && _.y != y;
     }
 
@@ -70,14 +87,17 @@ namespace nmu {
       x += _.x;
       y += _.y;
     }
+
     void operator-=( const vec2_t<T> & _ ) const noexcept {
       x -= _.x;
       y -= _.y;
     }
+
     void operator*=( const vec2_t<T> & _ ) const noexcept {
       x *= _.x;
       y *= _.y;
     }
+
     void operator/=( const vec2_t<T> & _ ) const noexcept {
       x /= _.x;
       y /= _.y;
