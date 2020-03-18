@@ -63,6 +63,12 @@ namespace nmu {
       }
     }
 
+    void negate( ) noexcept {
+      nmu_assert( is_valid( ), "Vector is invalid" );
+      x = -x;
+      y = -y;
+    }
+
     void clear( ) noexcept { x = y = 0; }
 
     T & operator[]( const std::uint8_t & _ ) const noexcept {
