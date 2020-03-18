@@ -50,8 +50,7 @@ namespace nmu {
     template <template <typename...> class C, typename... Ts> struct type_unwrapper<C<Ts...>> {
       static constexpr std::size_t type_count = sizeof...( Ts );
 
-      template <std::size_t N>
-      using param_t = typename std::tuple_element<N, std::tuple<Ts...>>::type;
+      template <std::size_t N> using param_t = typename std::tuple_element<N, std::tuple<Ts...>>::type;
     };
   } // namespace internal
 
@@ -94,6 +93,12 @@ namespace nmu {
       return x * _.x + y * _.y;
     }
 
+    [[nodiscard]] const T & cross( const vec2_t<T> & _ ) const noexcept {
+      nmu_assert( is_valid( ), "Vector is invalid" );
+      // C4172
+      return x * _.y - y * _.x;
+    }
+
     void normalize( ) noexcept {
       nmu_assert( is_valid( ), "Vector is invalid" );
       if ( const float _length = length( ); std::isnormal( _length ) ) {
@@ -126,13 +131,9 @@ namespace nmu {
       return *this;
     }
 
-    [[nodiscard]] bool operator==( const vec2_t<T> & _ ) const noexcept {
-      return _.x == x && _.y == y;
-    }
+    [[nodiscard]] bool operator==( const vec2_t<T> & _ ) const noexcept { return _.x == x && _.y == y; }
 
-    [[nodiscard]] bool operator!=( const vec2_t<T> & _ ) const noexcept {
-      return _.x != x && _.y != y;
-    }
+    [[nodiscard]] bool operator!=( const vec2_t<T> & _ ) const noexcept { return _.x != x && _.y != y; }
 
     void operator+=( const vec2_t<T> & _ ) const noexcept {
       x += _.x;
@@ -156,15 +157,28 @@ namespace nmu {
   };
 
   template <typename T>
-  [[nodiscard]] forceinline const float & dot_product( const T & a, const T & b ) noexcept {
+  [[nodiscard]] forceinline const auto & dot_product( const T & a, const T & b ) noexcept {
     constexpr bool is_2d_vector =
-        std::is_same<T, vec2_t<nmu::internal::type_unwrapper<T>::template param_t<0>>>::value;
+        std::is_same<T, vec2_t<typename nmu::internal::type_unwrapper<T>::template param_t<0>>>::value;
 
     static_assert( is_2d_vector, "Type must be vector" );
 
     if constexpr ( is_2d_vector ) {
       // C4172
       return a.x * b.x + a.y * b.y;
+    }
+  }
+
+  template <typename T>
+  [[nodiscard]] forceinline const auto & cross_product( const T & a, const T & b ) noexcept {
+    constexpr bool is_2d_vector =
+        std::is_same<T, vec2_t<typename nmu::internal::type_unwrapper<T>::template param_t<0>>>::value;
+
+    static_assert( is_2d_vector, "Type must be vector" );
+
+    if constexpr ( is_2d_vector ) {
+      // C4172
+      return a.x * b.y - a.y * b.x;
     }
   }
 } // namespace nmu
@@ -175,6 +189,7 @@ using vec2_t = nmu::vec2_t<float>;
 using vec2i_t = nmu::vec2_t<int>;
 
 #define dot_product nmu::dot_product
+#define cross_product nmu::cross_product
 
 #endif
 
