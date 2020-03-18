@@ -9,19 +9,35 @@
 #include <type_traits>
 #include <utility>
 
+#ifdef _MSC_VER
+#define forceinline __forceinline
+#else
+#define forceinline __attribute__( ( always_inline ) )
+#endif
+
 #define nmu_assert( condition, message ) assert( ( condition ) && ( message ) );
 
 namespace nmu {
+  // DO NOT USE outside nmu.hpp
+  namespace internal {
+    // Credits: https://stackoverflow.com/a/30519190
+    template <typename T> struct type_unwrapper;
+    template <template <typename...> class C, typename... Ts> struct type_unwrapper<C<Ts...>> {
+      static constexpr std::size_t type_count = sizeof...( Ts );
+
+      template <std::size_t N>
+      using param_t = typename std::tuple_element<N, std::tuple<Ts...>>::type;
+    };
+  } // namespace internal
+
   /**
    * ============================
    * Two dimensional vector (2D).
    * ============================
    */
-  template <typename T> class vec2_t {
+  template <typename T> struct vec2_t {
     static_assert( std::is_arithmetic<T>::value, "Type is not arithmetic" );
 
-  private:
-  public:
     T x = 0, y = 0;
 
     constexpr vec2_t( ) = default;
@@ -113,9 +129,24 @@ namespace nmu {
       y /= _.y;
     }
   };
+
+  template <typename T>
+  [[nodiscard]] forceinline const float & dot_product( const T & a, const T & b ) noexcept {
+    constexpr bool is_2d_vector =
+        std::is_same<T, vec2_t<nmu::internal::type_unwrapper<T>::template param_t<0>>>::value;
+
+    static_assert( is_2d_vector, "Type must be vector" );
+
+    if constexpr ( is_2d_vector ) {
+      // C4172
+      return a.x * b.x + a.y * b.y;
+    }
+  }
 } // namespace nmu
 
 using vec2_t = nmu::vec2_t<float>;
 using vec2i_t = nmu::vec2_t<int>;
+
+#define dot_product nmu::dot_product
 
 #endif // NMU_NMU_HPP
