@@ -144,9 +144,11 @@ namespace nmu {
   }
 } // namespace nmu
 
+#ifndef NMU_NO_GLOBALS
 using vec2_t = nmu::vec2_t<float>;
 using vec2i_t = nmu::vec2_t<int>;
 
 #define dot_product nmu::dot_product
+#endif
 
 #endif // NMU_NMU_HPP
