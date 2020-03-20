@@ -137,6 +137,22 @@ namespace nmu {
 
     [[nodiscard]] bool operator!=( const vec2_t<T> & _ ) const noexcept { return _.x != x && _.y != y; }
 
+    [[nodiscard]] const vec2_t<T> & operator+( const vec2_t<T> & _ ) const noexcept {
+      return vec2_t<T>{ x + _.x, y + _.y };
+    }
+
+    [[nodiscard]] const vec2_t<T> & operator-( const vec2_t<T> & _ ) const noexcept {
+      return vec2_t<T>{ x - _.x, y - _.y };
+    }
+
+    [[nodiscard]] const vec2_t<T> & operator*( const vec2_t<T> & _ ) const noexcept {
+      return vec2_t<T>{ x * _.x, y * _.y };
+    }
+
+    [[nodiscard]] const vec2_t<T> & operator/( const vec2_t<T> & _ ) const noexcept {
+      return vec2_t<T>{ x / _.x, y / _.y };
+    }
+
     void operator+=( const vec2_t<T> & _ ) const noexcept {
       x += _.x;
       y += _.y;
@@ -168,7 +184,7 @@ namespace nmu {
     if constexpr ( is_2d_vector ) {
       // C4172
 #ifndef NMU_NO_REDUNTANT_CLASS_FUNCTIONS
-      return a.dot(b);
+      return a.dot( b );
 #else
       return a.x * b.x + a.y * b.y;
 #endif
@@ -185,7 +201,7 @@ namespace nmu {
     if constexpr ( is_2d_vector ) {
       // C4172
 #ifndef NMU_NO_REDUNTANT_CLASS_FUNCTIONS
-      return a.cross(b);
+      return a.cross( b );
 #else
       return a.x * b.y - a.y * b.x;
 #endif
