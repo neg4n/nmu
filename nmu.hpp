@@ -87,6 +87,7 @@ namespace nmu {
       return std::sqrt( std::pow( x, 2 ) + std::pow( y, 2 ) );
     }
 
+#ifndef NMU_NO_REDUNTANT_CLASS_FUNCTIONS
     [[nodiscard]] const T & dot( const vec2_t<T> & _ ) const noexcept {
       nmu_assert( is_valid( ), "Vector is invalid" );
       // C4172
@@ -98,6 +99,7 @@ namespace nmu {
       // C4172
       return x * _.y - y * _.x;
     }
+#endif
 
     void normalize( ) noexcept {
       nmu_assert( is_valid( ), "Vector is invalid" );
@@ -165,7 +167,11 @@ namespace nmu {
 
     if constexpr ( is_2d_vector ) {
       // C4172
+#ifndef NMU_NO_REDUNTANT_CLASS_FUNCTIONS
+      return a.dot(b);
+#else
       return a.x * b.x + a.y * b.y;
+#endif
     }
   }
 
@@ -178,7 +184,11 @@ namespace nmu {
 
     if constexpr ( is_2d_vector ) {
       // C4172
+#ifndef NMU_NO_REDUNTANT_CLASS_FUNCTIONS
+      return a.cross(b);
+#else
       return a.x * b.y - a.y * b.x;
+#endif
     }
   }
 } // namespace nmu
