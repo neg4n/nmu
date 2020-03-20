@@ -47,6 +47,10 @@ sample code:
    printf( "x: %0.1f, y: %0.1f\n", A.x, A.y );
  }
 
+compiled and tested using:
+ - MSVC: yes (version: 19.24.28316.0)
+ - clang: no
+ - g++: no
 
 disclaimer:
 ===========
