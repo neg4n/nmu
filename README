@@ -11,8 +11,40 @@ feel free to contribute.
 features:
  - support for all arithmetic types
  - 2d vector implementation
+ - define NMU_NO_GLOBALS to disable global typedefs
+ - define NMU_NO_REDUNTANT_CLASS_FUNCTIONS to remove
+   functions like vec2_t.dot() and vec2_t.cross().
 
-documentation: soon.
+notes:
+ - it is better to use dot_product(A, B) or cross_product(A, B)
+   instead of vec2_t.dot(B) and vec2_t.cross(B) for better code readability
+
+ documentation: soon.
+
+sample code:
+=======
+
+ #include "../nmu.hpp"
+
+ int main( ) {
+   vec2_t A;
+   A = vec2_t{ 4.f, 3.f };
+
+   printf( "x: %0.1f, y: %0.1f\n", A.x, A.y );
+   printf( "is_valid(): %i\n", A.is_valid( ) );
+   printf( "length(): %0.1f\n", A.length( ) );
+   A.normalize( );
+   printf( "[CALL] normalize();\n" );
+   printf( "x: %0.1f, y: %0.1f\n", A.x, A.y );
+   printf( "dot(): %0.1f\n", A.dot( vec2_t{ 5.f, 5.f } ) );
+   printf( "dot_product(): %0.1f\n", dot_product<vec2_t>( A, vec2_t{ 5.f, 5.f } ) );
+   printf( "cross_product(): %0.1f\n", cross_product<vec2_t>( A, vec2_t{ 5.f, 5.f } ) );
+
+   A.clear( );
+   printf( "[CALL] clear();\n" );
+   printf( "x: %0.1f, y: %0.1f\n", A.x, A.y );
+ }
+
 
 disclaimer:
 ===========
