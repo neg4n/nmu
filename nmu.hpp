@@ -88,16 +88,16 @@ namespace nmu {
     }
 
 #ifndef NMU_NO_REDUNTANT_CLASS_FUNCTIONS
-    [[nodiscard]] const T & dot( const vec2_t<T> & _ ) const noexcept {
+    [[nodiscard]] const T & dot( const vec2_t<T> & b ) const noexcept {
       nmu_assert( is_valid( ), "Vector is invalid" );
       // C4172
-      return x * _.x + y * _.y;
+      return x * b.x + y * b.y;
     }
 
-    [[nodiscard]] const T & cross( const vec2_t<T> & _ ) const noexcept {
+    [[nodiscard]] const T & cross( const vec2_t<T> & b ) const noexcept {
       nmu_assert( is_valid( ), "Vector is invalid" );
       // C4172
-      return x * _.y - y * _.x;
+      return x * b.y - y * b.x;
     }
 #endif
 
@@ -119,58 +119,62 @@ namespace nmu {
 
     void clear( ) noexcept { x = y = 0; }
 
-    T & operator[]( const std::uint8_t & _ ) const noexcept {
-      nmu_assert( _ >= 0 && _ < 2, "Number must be between 0 and 1" );
-      return ( (T *)this )[ _ ];
+    T & operator[]( const std::uint8_t & i ) const noexcept {
+      nmu_assert( i >= 0 && i < 2, "Number must be between 0 and 1" );
+      return ( (T *)this )[ i ];
     }
 
     // Warning:(73, 25) Clang-Tidy: Operator=() does not handle self-assignment properly
-    vec2_t<T> & operator=( const vec2_t<T> & _ ) noexcept {
-      if ( &_ != this ) {
-        x = _.x;
-        y = _.y;
+    vec2_t<T> & operator=( const vec2_t<T> & rhs ) noexcept {
+      if ( &rhs != this ) {
+        x = rhs.x;
+        y = rhs.y;
       }
       return *this;
     }
 
-    [[nodiscard]] bool operator==( const vec2_t<T> & _ ) const noexcept { return _.x == x && _.y == y; }
-
-    [[nodiscard]] bool operator!=( const vec2_t<T> & _ ) const noexcept { return _.x != x && _.y != y; }
-
-    [[nodiscard]] const vec2_t<T> & operator+( const vec2_t<T> & _ ) const noexcept {
-      return vec2_t<T>{ x + _.x, y + _.y };
+    [[nodiscard]] bool operator==( const vec2_t<T> & rhs ) const noexcept {
+      return rhs.x == x && rhs.y == y;
     }
 
-    [[nodiscard]] const vec2_t<T> & operator-( const vec2_t<T> & _ ) const noexcept {
-      return vec2_t<T>{ x - _.x, y - _.y };
+    [[nodiscard]] bool operator!=( const vec2_t<T> & rhs ) const noexcept {
+      return rhs.x != x && rhs.y != y;
     }
 
-    [[nodiscard]] const vec2_t<T> & operator*( const vec2_t<T> & _ ) const noexcept {
-      return vec2_t<T>{ x * _.x, y * _.y };
+    [[nodiscard]] const vec2_t<T> & operator+( const vec2_t<T> & rhs ) const noexcept {
+      return vec2_t<T>{ x + rhs.x, y + rhs.y };
     }
 
-    [[nodiscard]] const vec2_t<T> & operator/( const vec2_t<T> & _ ) const noexcept {
-      return vec2_t<T>{ x / _.x, y / _.y };
+    [[nodiscard]] const vec2_t<T> & operator-( const vec2_t<T> & rhs ) const noexcept {
+      return vec2_t<T>{ x - rhs.x, y - rhs.y };
     }
 
-    void operator+=( const vec2_t<T> & _ ) const noexcept {
-      x += _.x;
-      y += _.y;
+    [[nodiscard]] const vec2_t<T> & operator*( const vec2_t<T> & rhs ) const noexcept {
+      return vec2_t<T>{ x * rhs.x, y * rhs.y };
     }
 
-    void operator-=( const vec2_t<T> & _ ) const noexcept {
-      x -= _.x;
-      y -= _.y;
+    [[nodiscard]] const vec2_t<T> & operator/( const vec2_t<T> & rhs ) const noexcept {
+      return vec2_t<T>{ x / rhs.x, y / rhs.y };
     }
 
-    void operator*=( const vec2_t<T> & _ ) const noexcept {
-      x *= _.x;
-      y *= _.y;
+    void operator+=( const vec2_t<T> & rhs ) const noexcept {
+      x += rhs.x;
+      y += rhs.y;
     }
 
-    void operator/=( const vec2_t<T> & _ ) const noexcept {
-      x /= _.x;
-      y /= _.y;
+    void operator-=( const vec2_t<T> & rhs ) const noexcept {
+      x -= rhs.x;
+      y -= rhs.y;
+    }
+
+    void operator*=( const vec2_t<T> & rhs ) const noexcept {
+      x *= rhs.x;
+      y *= rhs.y;
+    }
+
+    void operator/=( const vec2_t<T> & rhs ) const noexcept {
+      x /= rhs.x;
+      y /= rhs.y;
     }
   };
 
