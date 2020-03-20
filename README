@@ -24,7 +24,7 @@ notes:
  documentation: soon.
 
 sample code:
-=======
+============
 
  #include "../nmu.hpp"
 
