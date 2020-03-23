@@ -66,8 +66,7 @@ namespace nmu {
     constexpr vec2_t( ) = default;
     constexpr vec2_t( const T & x, const T & y ) : x( x ), y( y ){};
     constexpr explicit vec2_t( T * source ) : x( source[ 0 ] ), y( source[ 1 ] ){};
-    constexpr explicit vec2_t( const std::pair<T, T> & source )
-        : x( source.first ), y( source.second ){};
+    constexpr explicit vec2_t( const std::pair<T, T> & source ) : x( source.first ), y( source.second ){};
 
     [[nodiscard]] bool margin_is_zero( const float margin /* = 0.1f */ ) const noexcept {
       return x > -margin && x < margin && y > -margin && y < margin;
@@ -80,29 +79,29 @@ namespace nmu {
         return x != 0 && y != 0;
     }
 
-    [[nodiscard]] const T & length( ) const noexcept {
+    [[nodiscard]] T length( ) const noexcept {
       nmu_assert( is_valid( ), "Vector is invalid" );
-      // C4172
       return std::sqrt( std::pow( x, 2 ) + std::pow( y, 2 ) );
     }
 
-    [[nodiscard]] const T & length_sq( ) const noexcept {
+    [[nodiscard]] T length_sq( ) const noexcept {
       nmu_assert( is_valid( ), "Vector is invalid" );
-      // C4172
       return std::pow( x, 2 ) + std::pow( y, 2 );
     }
 
 #ifndef NMU_NO_REDUNTANT_CLASS_FUNCTIONS
-    [[nodiscard]] const T & dot( const vec2_t<T> & b ) const noexcept {
+    [[nodiscard]] T dot( const vec2_t<T> & b ) const noexcept {
       nmu_assert( is_valid( ), "Vector is invalid" );
-      // C4172
       return x * b.x + y * b.y;
     }
 
-    [[nodiscard]] const T & cross( const vec2_t<T> & b ) const noexcept {
+    [[nodiscard]] T cross( const vec2_t<T> & b ) const noexcept {
       nmu_assert( is_valid( ), "Vector is invalid" );
-      // C4172
       return x * b.y - y * b.x;
+    }
+
+    [[nodiscard]] T distance( const vec2_t<T> & b ) const noexcept {
+      return ( vec2_t<T>{ x - b.x, y - b.y } ).length( );
     }
 #endif
 
@@ -138,13 +137,9 @@ namespace nmu {
       return *this;
     }
 
-    [[nodiscard]] bool operator==( const vec2_t<T> & rhs ) const noexcept {
-      return rhs.x == x && rhs.y == y;
-    }
+    [[nodiscard]] bool operator==( const vec2_t<T> & rhs ) const noexcept { return rhs.x == x && rhs.y == y; }
 
-    [[nodiscard]] bool operator!=( const vec2_t<T> & rhs ) const noexcept {
-      return rhs.x != x && rhs.y != y;
-    }
+    [[nodiscard]] bool operator!=( const vec2_t<T> & rhs ) const noexcept { return rhs.x != x && rhs.y != y; }
 
     [[nodiscard]] const vec2_t<T> & operator+( const vec2_t<T> & rhs ) const noexcept {
       return vec2_t<T>{ x + rhs.x, y + rhs.y };
@@ -183,15 +178,13 @@ namespace nmu {
     }
   };
 
-  template <typename T>
-  [[nodiscard]] forceinline const auto & dot_product( const T & a, const T & b ) noexcept {
+  template <typename T> [[nodiscard]] forceinline auto dot_product( const T & a, const T & b ) noexcept {
     constexpr bool is_2d_vector =
         std::is_same<T, vec2_t<typename nmu::internal::type_unwrapper<T>::template param_t<0>>>::value;
 
     static_assert( is_2d_vector, "Type must be vector" );
 
     if constexpr ( is_2d_vector ) {
-      // C4172
 #ifndef NMU_NO_REDUNTANT_CLASS_FUNCTIONS
       return a.dot( b );
 #else
@@ -200,19 +193,32 @@ namespace nmu {
     }
   }
 
-  template <typename T>
-  [[nodiscard]] forceinline const auto & cross_product( const T & a, const T & b ) noexcept {
+  template <typename T> [[nodiscard]] forceinline auto cross_product( const T & a, const T & b ) noexcept {
     constexpr bool is_2d_vector =
         std::is_same<T, vec2_t<typename nmu::internal::type_unwrapper<T>::template param_t<0>>>::value;
 
     static_assert( is_2d_vector, "Type must be vector" );
 
     if constexpr ( is_2d_vector ) {
-      // C4172
 #ifndef NMU_NO_REDUNTANT_CLASS_FUNCTIONS
       return a.cross( b );
 #else
       return a.x * b.y - a.y * b.x;
+#endif
+    }
+  }
+
+  template <typename T> [[nodiscard]] forceinline auto distance( const T & a, const T & b ) noexcept {
+    constexpr bool is_2d_vector =
+        std::is_same<T, vec2_t<typename nmu::internal::type_unwrapper<T>::template param_t<0>>>::value;
+
+    static_assert( is_2d_vector, "Type must be vector" );
+
+    if constexpr ( is_2d_vector ) {
+#ifndef NMU_NO_REDUNTANT_CLASS_FUNCTIONS
+      return a.distance( b );
+#else
+      return ( T{ a.x - b.x, a.y - b.y } ).length( );
 #endif
     }
   }
@@ -225,6 +231,7 @@ using vec2i_t = nmu::vec2_t<int>;
 
 #define dot_product nmu::dot_product
 #define cross_product nmu::cross_product
+#define calc_distance nmu::distance
 
 #endif
 
