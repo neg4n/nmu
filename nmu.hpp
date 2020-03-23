@@ -26,7 +26,6 @@
 #ifndef NMU_NMU_HPP
 #define NMU_NMU_HPP
 
-#include <any>
 #include <cassert>
 #include <cmath>
 #include <cstdint>
@@ -85,6 +84,12 @@ namespace nmu {
       nmu_assert( is_valid( ), "Vector is invalid" );
       // C4172
       return std::sqrt( std::pow( x, 2 ) + std::pow( y, 2 ) );
+    }
+
+    [[nodiscard]] const T & length_sq( ) const noexcept {
+      nmu_assert( is_valid( ), "Vector is invalid" );
+      // C4172
+      return std::pow( x, 2 ) + std::pow( y, 2 );
     }
 
 #ifndef NMU_NO_REDUNTANT_CLASS_FUNCTIONS
