@@ -35,11 +35,16 @@ sample code:
    printf( "x: %0.1f, y: %0.1f\n", A.x, A.y );
    printf( "is_valid(): %i\n", A.is_valid( ) );
    printf( "length(): %0.1f\n", A.length( ) );
+   printf( "length_sq(): %0.1f\n", A.length_sq( ) );
+   // deprecated: printf( "distance(): %0.6f\n", A.distance( vec2_t{ 9.f, 9.f } ) );
+   printf( "calc_distance(): %0.6f\n", calc_distance<vec2_t>( A, vec2_t{ 9.f, 9.f } ) );
+
    A.normalize( );
    printf( "[CALL] normalize();\n" );
    printf( "x: %0.1f, y: %0.1f\n", A.x, A.y );
-   printf( "dot(): %0.1f\n", A.dot( vec2_t{ 5.f, 5.f } ) );
+   // deprecated: printf( "dot(): %0.1f\n", A.dot( vec2_t{ 5.f, 5.f } ) );
    printf( "dot_product(): %0.1f\n", dot_product<vec2_t>( A, vec2_t{ 5.f, 5.f } ) );
+   // deprecated: printf( "cross(): %0.1f\n", A.cross( vec2_t{ 5.f, 5.f } ) );
    printf( "cross_product(): %0.1f\n", cross_product<vec2_t>( A, vec2_t{ 5.f, 5.f } ) );
 
    A.clear( );
@@ -48,7 +53,7 @@ sample code:
  }
 
 compiled and tested using:
- - MSVC: yes (version: 19.24.28316.0)
+ - MSVC: yes (_MSC_VER == 1924) (see: https://en.wikipedia.org/wiki/Microsoft_Visual_C%2B%2B#Internal_version_numbering)
  - clang: no
  - g++: no
 
