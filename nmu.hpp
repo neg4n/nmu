@@ -89,20 +89,25 @@ namespace nmu {
       return std::pow( x, 2 ) + std::pow( y, 2 );
     }
 
-#ifndef NMU_NO_REDUNTANT_CLASS_FUNCTIONS
-    [[nodiscard]] T dot( const vec2_t<T> & b ) const noexcept {
+#ifdef NMU_USE_DEPRECATED
+    // clang-format off
+    [[deprecated("Replaced with universal dot_product().")]] [[nodiscard]]
+    T dot( const vec2_t<T> & b ) const noexcept {
       nmu_assert( is_valid( ), "Vector is invalid" );
       return x * b.x + y * b.y;
     }
 
-    [[nodiscard]] T cross( const vec2_t<T> & b ) const noexcept {
+    [[deprecated("Replaced with universal cross_product().")]] [[nodiscard]]
+    T cross( const vec2_t<T> & b ) const noexcept {
       nmu_assert( is_valid( ), "Vector is invalid" );
       return x * b.y - y * b.x;
     }
 
-    [[nodiscard]] T distance( const vec2_t<T> & b ) const noexcept {
+    [[deprecated("Replaced with universal calc_distance().")]] [[nodiscard]]
+    T distance( const vec2_t<T> & b ) const noexcept {
       return ( vec2_t<T>{ x - b.x, y - b.y } ).length( );
     }
+    // clang-format on
 #endif
 
     void normalize( ) noexcept {
@@ -185,7 +190,7 @@ namespace nmu {
     static_assert( is_2d_vector, "Type must be vector" );
 
     if constexpr ( is_2d_vector ) {
-#ifndef NMU_NO_REDUNTANT_CLASS_FUNCTIONS
+#ifdef NMU_USE_DEPRECATED
       return a.dot( b );
 #else
       return a.x * b.x + a.y * b.y;
@@ -200,7 +205,7 @@ namespace nmu {
     static_assert( is_2d_vector, "Type must be vector" );
 
     if constexpr ( is_2d_vector ) {
-#ifndef NMU_NO_REDUNTANT_CLASS_FUNCTIONS
+#ifdef NMU_USE_DEPRECATED
       return a.cross( b );
 #else
       return a.x * b.y - a.y * b.x;
@@ -215,7 +220,7 @@ namespace nmu {
     static_assert( is_2d_vector, "Type must be vector" );
 
     if constexpr ( is_2d_vector ) {
-#ifndef NMU_NO_REDUNTANT_CLASS_FUNCTIONS
+#ifdef NMU_USE_DEPRECATED
       return a.distance( b );
 #else
       return ( T{ a.x - b.x, a.y - b.y } ).length( );

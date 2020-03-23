@@ -14,7 +14,7 @@ features:
 
 preprocessor features:
  - define NMU_NO_GLOBALS to disable global typedefs
- - define NMU_NO_REDUNTANT_CLASS_FUNCTIONS to remove
+ - define NMU_USE_DEPRECATED to use deprecated
    functions like vec2_t.dot() and vec2_t.cross()
 
 notes:
