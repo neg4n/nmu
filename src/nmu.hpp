@@ -37,9 +37,8 @@
 
 namespace nmu {
 
-  constexpr float pi_number_f = 3.141592f;
-  // TODO: Precision
-  constexpr double pi_number = 3.14159265359;
+  constexpr inline float pi_number_f = 3.141592f;
+  constexpr inline double pi_number = 3.14159265358979;
 
   template <typename T>[[nodiscard]] forceinline auto rad2deg( T radians ) noexcept {
     constexpr bool is_float = std::is_same<T, float>::value;
