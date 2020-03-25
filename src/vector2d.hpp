@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef NMU_NMU_HPP
-#define NMU_NMU_HPP
+#ifndef NMU_VECTOR2D_HPP
+#define NMU_VECTOR2D_HPP
 
 #include <cassert>
 #include <cmath>
@@ -33,26 +33,9 @@
 #include <type_traits>
 #include <utility>
 
-#ifdef _MSC_VER
-#define forceinline __forceinline
-#else
-#define forceinline __attribute__( ( always_inline ) )
-#endif
-
-#define nmu_assert( condition, message ) assert( ( condition ) && ( message ) );
+#include "internal.hpp"
 
 namespace nmu {
-  // DO NOT USE outside nmu.hpp
-  namespace internal {
-    // Credits: https://stackoverflow.com/a/30519190
-    template <typename T> struct type_unwrapper;
-    template <template <typename...> class C, typename... Ts> struct type_unwrapper<C<Ts...>> {
-      static constexpr std::size_t type_count = sizeof...( Ts );
-
-      template <std::size_t N> using param_t = typename std::tuple_element<N, std::tuple<Ts...>>::type;
-    };
-  } // namespace internal
-
   /**
    * ============================
    * Two dimensional vector (2D).
@@ -182,62 +165,6 @@ namespace nmu {
       y /= rhs.y;
     }
   };
-
-  template <typename T> [[nodiscard]] forceinline auto dot_product( const T & a, const T & b ) noexcept {
-    constexpr bool is_2d_vector =
-        std::is_same<T, vec2_t<typename nmu::internal::type_unwrapper<T>::template param_t<0>>>::value;
-
-    static_assert( is_2d_vector, "Type must be vector" );
-
-    if constexpr ( is_2d_vector ) {
-#ifdef NMU_USE_DEPRECATED
-      return a.dot( b );
-#else
-      return a.x * b.x + a.y * b.y;
-#endif
-    }
-  }
-
-  template <typename T> [[nodiscard]] forceinline auto cross_product( const T & a, const T & b ) noexcept {
-    constexpr bool is_2d_vector =
-        std::is_same<T, vec2_t<typename nmu::internal::type_unwrapper<T>::template param_t<0>>>::value;
-
-    static_assert( is_2d_vector, "Type must be vector" );
-
-    if constexpr ( is_2d_vector ) {
-#ifdef NMU_USE_DEPRECATED
-      return a.cross( b );
-#else
-      return a.x * b.y - a.y * b.x;
-#endif
-    }
-  }
-
-  template <typename T> [[nodiscard]] forceinline auto distance( const T & a, const T & b ) noexcept {
-    constexpr bool is_2d_vector =
-        std::is_same<T, vec2_t<typename nmu::internal::type_unwrapper<T>::template param_t<0>>>::value;
-
-    static_assert( is_2d_vector, "Type must be vector" );
-
-    if constexpr ( is_2d_vector ) {
-#ifdef NMU_USE_DEPRECATED
-      return a.distance( b );
-#else
-      return ( T{ a.x - b.x, a.y - b.y } ).length( );
-#endif
-    }
-  }
 } // namespace nmu
 
-#ifndef NMU_NO_GLOBALS
-
-using vec2_t = nmu::vec2_t<float>;
-using vec2i_t = nmu::vec2_t<int>;
-
-#define dot_product nmu::dot_product
-#define cross_product nmu::cross_product
-#define calc_distance nmu::distance
-
-#endif
-
-#endif // NMU_NMU_HPP
+#endif // NMU_VECTOR2D_HPP
