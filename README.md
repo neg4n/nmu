@@ -11,6 +11,7 @@ and add this line to your `CMakeLists.txt`:
 ```cmake
 include_directories("nmu/src")
 ```
+then simply `#include <nmu.hpp>` in your code.
 
 Documentation will be available soon. 
 
