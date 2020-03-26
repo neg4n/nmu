@@ -77,11 +77,7 @@ namespace nmu {
     static_assert( is_2d_vector || is_3d_vector, "Type must be vector" );
 
     if constexpr ( is_2d_vector ) {
-#ifdef NMU_USE_DEPRECATED
-      return a.dot( b );
-#else
       return a.x * b.x + a.y * b.y;
-#endif
     } else if constexpr ( is_3d_vector ) {
       return a.x * b.x + a.y * b.y + a.z * b.z;
     }
@@ -97,11 +93,7 @@ namespace nmu {
     static_assert( is_2d_vector || is_3d_vector, "Type must be vector" );
 
     if constexpr ( is_2d_vector ) {
-#ifdef NMU_USE_DEPRECATED
-      return a.cross( b );
-#else
       return a.x * b.y - a.y * b.x;
-#endif
     } else if constexpr ( is_3d_vector ) {
       return ( ( a.y * b.z ) - ( a.z * b.y ), ( a.z * b.x ) - ( a.x * b.z ), ( a.x * b.y ) - ( a.y * b.x ) );
     }
@@ -117,11 +109,7 @@ namespace nmu {
     static_assert( is_2d_vector || is_3d_vector, "Type must be vector" );
 
     if constexpr ( is_2d_vector ) {
-#ifdef NMU_USE_DEPRECATED
-      return a.distance( b );
-#else
       return ( T{ a.x - b.x, a.y - b.y } ).length( );
-#endif
     } else if constexpr ( is_3d_vector ) {
       return ( T{ a.x - b.x, a.y - b.y, a.z - b.z } ).length( );
     }

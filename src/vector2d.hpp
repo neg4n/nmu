@@ -72,27 +72,6 @@ namespace nmu {
       return std::pow( x, 2 ) + std::pow( y, 2 );
     }
 
-#ifdef NMU_USE_DEPRECATED
-    // clang-format off
-    [[deprecated("Replaced with universal dot_product().")]] [[nodiscard]]
-    T dot( const vec2_t<T> & b ) const noexcept {
-      nmu_assert( is_valid( ), "Vector is invalid" );
-      return x * b.x + y * b.y;
-    }
-
-    [[deprecated("Replaced with universal cross_product().")]] [[nodiscard]]
-    T cross( const vec2_t<T> & b ) const noexcept {
-      nmu_assert( is_valid( ), "Vector is invalid" );
-      return x * b.y - y * b.x;
-    }
-
-    [[deprecated("Replaced with universal calc_distance().")]] [[nodiscard]]
-    T distance( const vec2_t<T> & b ) const noexcept {
-      return ( vec2_t<T>{ x - b.x, y - b.y } ).length( );
-    }
-    // clang-format on
-#endif
-
     void normalize( ) noexcept {
       nmu_assert( is_valid( ), "Vector is invalid" );
       if ( const float _length = length( ); std::isnormal( _length ) ) {
