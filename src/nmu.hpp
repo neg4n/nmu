@@ -38,8 +38,10 @@
 
 namespace nmu {
 
-  constexpr inline float pi_number_f = 3.141592f;
-  constexpr inline double pi_number = 3.14159265358979;
+  namespace constants {
+    constexpr inline float pi_number_f = 3.141592f;
+    constexpr inline double pi_number = 3.14159265358979;
+  } // namespace constants
 
   template <typename T>[[nodiscard]] forceinline T rad2deg( T radians ) noexcept {
     constexpr bool is_float = std::is_same<T, float>::value;
@@ -49,9 +51,9 @@ namespace nmu {
     static_assert( is_float || is_double || is_long_double, "Type must be float, double or long double" );
 
     if constexpr ( is_float )
-      return radians * 180.f / pi_number_f;
+      return radians * 180.f / constants::pi_number_f;
     else if constexpr ( is_double || is_long_double )
-      return radians * 180.0 / pi_number;
+      return radians * 180.0 / constants::pi_number;
   }
 
   template <typename T>[[nodiscard]] forceinline T deg2rad( T degrees ) noexcept {
@@ -62,9 +64,9 @@ namespace nmu {
     static_assert( is_float || is_double || is_long_double, "Type must be float, double or long double" );
 
     if constexpr ( is_float )
-      return degrees * pi_number_f / 180.f;
+      return degrees * constants::pi_number_f / 180.f;
     else if constexpr ( is_double || is_long_double )
-      return degrees * pi_number / 180.0;
+      return degrees * constants::pi_number / 180.0;
   }
 
   template <typename T>[[nodiscard]] forceinline auto dot_product( const T & a, const T & b ) noexcept {
@@ -124,8 +126,8 @@ using vec2i_t = nmu::vec2_t<int>;
 using vec3_t = nmu::vec3_t<float>;
 using vec3i_t = nmu::vec3_t<int>;
 
-#define m_pi_f nmu::pi_number_f
-#define m_pi nmu::pi_number
+#define m_pi_f nmu::constants::pi_number_f
+#define m_pi nmu::constants::pi_number
 
 #define dot_product nmu::dot_product
 #define cross_product nmu::cross_product
