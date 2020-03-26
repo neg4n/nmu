@@ -26,6 +26,9 @@ Documentation will be available soon.
 #### Features
 
 - Two-dimensional (2D) vectors with all arithmetic types support.
+- Three-dimensional (3D) vectors with all arithmetic types support.
+- Radians to degrees and degrees to radians conversion.
+- Math constants.
 
 *more soon...*
     
