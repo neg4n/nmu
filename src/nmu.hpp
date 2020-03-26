@@ -28,6 +28,7 @@
 
 #include "internal.hpp"
 #include "vector2d.hpp"
+#include "vector3d.hpp"
 
 #ifdef _MSC_VER
 #define forceinline __forceinline
@@ -40,7 +41,7 @@ namespace nmu {
   constexpr inline float pi_number_f = 3.141592f;
   constexpr inline double pi_number = 3.14159265358979;
 
-  template <typename T>[[nodiscard]] forceinline auto rad2deg( T radians ) noexcept {
+  template <typename T>[[nodiscard]] forceinline T rad2deg( T radians ) noexcept {
     constexpr bool is_float = std::is_same<T, float>::value;
     constexpr bool is_double = std::is_same<T, double>::value;
     constexpr bool is_long_double = std::is_same<T, long double>::value;
@@ -53,7 +54,7 @@ namespace nmu {
       return radians * 180.0 / pi_number;
   }
 
-  template <typename T>[[nodiscard]] forceinline auto deg2rad( T degrees ) noexcept {
+  template <typename T>[[nodiscard]] forceinline T deg2rad( T degrees ) noexcept {
     constexpr bool is_float = std::is_same<T, float>::value;
     constexpr bool is_double = std::is_same<T, double>::value;
     constexpr bool is_long_double = std::is_same<T, long double>::value;
@@ -70,7 +71,10 @@ namespace nmu {
     constexpr bool is_2d_vector =
         std::is_same<T, vec2_t<typename _nmu_internal::type_unwrapper<T>::template param_t<0>>>::value;
 
-    static_assert( is_2d_vector, "Type must be vector" );
+    constexpr bool is_3d_vector =
+        std::is_same<T, vec3_t<typename _nmu_internal::type_unwrapper<T>::template param_t<0>>>::value;
+
+    static_assert( is_2d_vector || is_3d_vector, "Type must be vector" );
 
     if constexpr ( is_2d_vector ) {
 #ifdef NMU_USE_DEPRECATED
@@ -78,6 +82,8 @@ namespace nmu {
 #else
       return a.x * b.x + a.y * b.y;
 #endif
+    } else if constexpr ( is_3d_vector ) {
+      return a.x * b.x + a.y * b.y + a.z * b.z;
     }
   }
 
@@ -85,7 +91,10 @@ namespace nmu {
     constexpr bool is_2d_vector =
         std::is_same<T, vec2_t<typename _nmu_internal::type_unwrapper<T>::template param_t<0>>>::value;
 
-    static_assert( is_2d_vector, "Type must be vector" );
+    constexpr bool is_3d_vector =
+        std::is_same<T, vec3_t<typename _nmu_internal::type_unwrapper<T>::template param_t<0>>>::value;
+
+    static_assert( is_2d_vector || is_3d_vector, "Type must be vector" );
 
     if constexpr ( is_2d_vector ) {
 #ifdef NMU_USE_DEPRECATED
@@ -93,6 +102,8 @@ namespace nmu {
 #else
       return a.x * b.y - a.y * b.x;
 #endif
+    } else if constexpr ( is_3d_vector ) {
+      return ( ( a.y * b.z ) - ( a.z * b.y ), ( a.z * b.x ) - ( a.x * b.z ), ( a.x * b.y ) - ( a.y * b.x ) );
     }
   }
 
@@ -100,7 +111,10 @@ namespace nmu {
     constexpr bool is_2d_vector =
         std::is_same<T, vec2_t<typename _nmu_internal::type_unwrapper<T>::template param_t<0>>>::value;
 
-    static_assert( is_2d_vector, "Type must be vector" );
+    constexpr bool is_3d_vector =
+        std::is_same<T, vec3_t<typename _nmu_internal::type_unwrapper<T>::template param_t<0>>>::value;
+
+    static_assert( is_2d_vector || is_3d_vector, "Type must be vector" );
 
     if constexpr ( is_2d_vector ) {
 #ifdef NMU_USE_DEPRECATED
@@ -108,6 +122,8 @@ namespace nmu {
 #else
       return ( T{ a.x - b.x, a.y - b.y } ).length( );
 #endif
+    } else if constexpr ( is_3d_vector ) {
+      return ( T{ a.x - b.x, a.y - b.y, a.z - b.z } ).length( );
     }
   }
 } // namespace nmu
@@ -116,6 +132,9 @@ namespace nmu {
 
 using vec2_t = nmu::vec2_t<float>;
 using vec2i_t = nmu::vec2_t<int>;
+
+using vec3_t = nmu::vec3_t<float>;
+using vec3i_t = nmu::vec3_t<int>;
 
 #define m_pi_f nmu::pi_number_f
 #define m_pi nmu::pi_number
