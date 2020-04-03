@@ -47,7 +47,7 @@ namespace nmu {
 		T x = 0, y = 0;
 
 		constexpr vec2_t( ) = default;
-		constexpr vec2_t( const T & x, const T & y ) : x( x ), y( y ) { };
+		constexpr vec2_t( T x, T y ) : x( x ), y( y ) { };
 		constexpr explicit vec2_t( T * source ) : x( source[ 0 ] ), y( source[ 1 ] ) { };
 		constexpr explicit vec2_t( const std::pair<T, T> & source ) : x( source.first ), y( source.second ) { };
 

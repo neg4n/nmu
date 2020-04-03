@@ -47,7 +47,7 @@ namespace nmu {
 		T x = 0, y = 0, z = 0;
 
 		constexpr vec3_t( ) = default;
-		constexpr vec3_t( const T & x, const T & y, const T & z ) : x( x ), y( y ), z( z ) { };
+		constexpr vec3_t( T x, T y, T z ) : x( x ), y( y ), z( z ) { };
 		constexpr explicit vec3_t( T * source ) : x( source[ 0 ] ), y( source[ 1 ] ), z( source[ 2 ] ) { };
 
 		[[nodiscard]] bool margin_is_zero( const float margin /* = 0.1f */ ) const noexcept {
