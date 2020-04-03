@@ -20,7 +20,7 @@ Documentation will be available soon.
 | Name | Tested | Version |
 |----------|--------|---------|
 | MSVC     | ✅      | 1924    |
-| g++      | ❌      | none    |
+| g++      |✅ | 7.5.0    |
 | clang    | ❌      | none    |
 
 #### Features
