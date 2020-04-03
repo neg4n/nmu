@@ -1,22 +1,33 @@
+
+# --------------------------------------------
+#     neg4n's clang-format configuration.
+#             github.com/neg4n
+# --------------------------------------------
 ---
 BasedOnStyle: LLVM
-AllowAllParametersOfDeclarationOnNextLine: 'false'
-BinPackArguments: 'false'
-BinPackParameters: 'false'
-ColumnLimit: '110'
-Cpp11BracedListStyle: 'false'
-ExperimentalAutoDetectBinPacking: 'false'
-IndentCaseLabels: 'true'
 Language: Cpp
+TabWidth: 2
+ColumnLimit: 110
+UseTab: Always
+AllowAllParametersOfDeclarationOnNextLine: false
+BinPackArguments: false
+BinPackParameters: false
+Cpp11BracedListStyle: false
+ExperimentalAutoDetectBinPacking: false
+IndentCaseLabels: true
 NamespaceIndentation: All
 PointerAlignment: Middle
-SortUsingDeclarations: 'false'
-SpaceAfterTemplateKeyword: 'true'
-SpaceBeforeCpp11BracedList: 'false'
-SpaceInEmptyParentheses: 'true'
-SpacesBeforeTrailingComments: '1'
-SpacesInAngles: 'false'
-SpacesInParentheses: 'true'
-SpacesInSquareBrackets: 'true'
-TabWidth: '2'
-UseTab: Never
+SortUsingDeclarations: false
+SpaceAfterTemplateKeyword: true
+SpaceBeforeCpp11BracedList: true
+SpaceInEmptyParentheses: true
+SpacesBeforeTrailingComments: 1
+SpacesInAngles: false
+SpacesInParentheses: true
+AlignConsecutiveAssignments: true
+SpacesInSquareBrackets: true
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortBlocksOnASingleLine: "Never"
+AlwaysBreakTemplateDeclarations: "MultiLine"
+AlignEscapedNewlines: "Left"
+
