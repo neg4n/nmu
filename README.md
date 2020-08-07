@@ -28,6 +28,11 @@ Documentation will be available soon.
 - Two-dimensional (2D) vectors with all arithmetic types support.
 - Three-dimensional (3D) vectors with all arithmetic types support.
 - Radians to degrees and degrees to radians conversion.
+- Colors (8bit per channel) support with conversions between various notations
+  - From/to float
+  - From/To float with alpha
+  - From/to integer
+  - To integer with alpha // TODO: Support from conversion
 - Math constants.
 
 *more soon...*
