@@ -33,13 +33,13 @@
 
 // DO NOT USE outside nmu.hpp
 namespace _nmu_internal {
-	// Credits: https://stackoverflow.com/a/30519190
-	template <typename T> struct type_unwrapper;
-	template <template <typename...> class C, typename... Ts> struct type_unwrapper<C<Ts...>> {
-		static constexpr std::size_t type_count = sizeof...( Ts );
+  // Credits: https://stackoverflow.com/a/30519190
+  template <typename T> struct type_unwrapper;
+  template <template <typename...> class C, typename... Ts> struct type_unwrapper<C<Ts...>> {
+    static constexpr std::size_t type_count = sizeof...( Ts );
 
-		template <std::size_t N> using param_t = typename std::tuple_element<N, std::tuple<Ts...>>::type;
-	};
+    template <std::size_t N> using param_t = typename std::tuple_element<N, std::tuple<Ts...>>::type;
+  };
 } // namespace _nmu_internal
 
 #endif // NMU_INTERNAL_HPP

@@ -1,4 +1,3 @@
-
 # --------------------------------------------
 #     neg4n's clang-format configuration.
 #             github.com/neg4n
@@ -8,8 +7,9 @@ BasedOnStyle: LLVM
 Language: Cpp
 TabWidth: 2
 ColumnLimit: 110
-UseTab: Always
+UseTab: Never
 AllowAllParametersOfDeclarationOnNextLine: false
+AlignConsecutiveDeclarations: true
 BinPackArguments: false
 BinPackParameters: false
 Cpp11BracedListStyle: false
