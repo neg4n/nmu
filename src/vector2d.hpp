@@ -90,9 +90,9 @@ namespace nmu {
 
     void clear( ) noexcept { x = y = 0; }
 
-    T & operator[]( const std::uint8_t & i ) const noexcept {
-      nmu_assert( i >= 0 && i < 2, "Number must be between 0 and 1" );
-      return ( (T *)this )[ i ];
+    T & operator[]( const std::uint8_t index ) const noexcept {
+      nmu_assert( index >= 0 && index < 2, "Number must be between 0 and 1" );
+      return ( (T *)this )[ index ];
     }
 
     // Warning:(73, 25) Clang-Tidy: Operator=() does not handle self-assignment properly
@@ -124,22 +124,22 @@ namespace nmu {
       return vec2_t<T> { x / rhs.x, y / rhs.y };
     }
 
-    void operator+=( const vec2_t<T> & rhs ) const noexcept {
+    void operator+=( const vec2_t<T> & rhs ) noexcept {
       x += rhs.x;
       y += rhs.y;
     }
 
-    void operator-=( const vec2_t<T> & rhs ) const noexcept {
+    void operator-=( const vec2_t<T> & rhs ) noexcept {
       x -= rhs.x;
       y -= rhs.y;
     }
 
-    void operator*=( const vec2_t<T> & rhs ) const noexcept {
+    void operator*=( const vec2_t<T> & rhs ) noexcept {
       x *= rhs.x;
       y *= rhs.y;
     }
 
-    void operator/=( const vec2_t<T> & rhs ) const noexcept {
+    void operator/=( const vec2_t<T> & rhs ) noexcept {
       x /= rhs.x;
       y /= rhs.y;
     }

@@ -32,7 +32,7 @@
 
 namespace nmu {
   namespace color_formats {
-   constexpr inline int rgba = 1, hex = 2;
+    constexpr inline int rgba = 1, hex = 2;
   }
   /**
    * ===================================
@@ -97,7 +97,7 @@ namespace nmu {
      * -----------------------------------------
      */
 
-    template <typename T, std::uint8_t N>[[nodiscard]] std::array<T, N> to( ) const noexcept {
+    template <typename T, std::uint8_t N> [[nodiscard]] std::array<T, N> to( ) const noexcept {
       constexpr bool should_export_to_float = std::is_same<T, float>::value;
       constexpr bool should_export_to_int   = std::is_same<T, int>::value;
 
