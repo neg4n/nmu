@@ -44,7 +44,7 @@ namespace nmu {
     constexpr inline double pi_number   = 3.14159265358979;
   } // namespace constants
 
-  template <typename T> [[nodiscard]] forceinline T rad2deg( T radians ) noexcept {
+  template <typename T> [[nodiscard]] inline T rad2deg( T radians ) noexcept {
     constexpr bool is_float       = std::is_same<T, float>::value;
     constexpr bool is_double      = std::is_same<T, double>::value;
     constexpr bool is_long_double = std::is_same<T, long double>::value;
@@ -57,7 +57,7 @@ namespace nmu {
       return radians * 180.0 / constants::pi_number;
   }
 
-  template <typename T> [[nodiscard]] forceinline T deg2rad( T degrees ) noexcept {
+  template <typename T> [[nodiscard]] inline T deg2rad( T degrees ) noexcept {
     constexpr bool is_float       = std::is_same<T, float>::value;
     constexpr bool is_double      = std::is_same<T, double>::value;
     constexpr bool is_long_double = std::is_same<T, long double>::value;
@@ -70,7 +70,7 @@ namespace nmu {
       return degrees * constants::pi_number / 180.0;
   }
 
-  template <typename T> [[nodiscard]] forceinline auto dot_product( const T & a, const T & b ) noexcept {
+  template <typename T> [[nodiscard]] inline auto dot_product( const T & a, const T & b ) noexcept {
     constexpr bool is_2d_vector =
         std::is_same<T, vec2_t<typename _nmu_internal::type_unwrapper<T>::template param_t<0>>>::value;
 
@@ -86,7 +86,7 @@ namespace nmu {
     }
   }
 
-  template <typename T> [[nodiscard]] forceinline auto cross_product( const T & a, const T & b ) noexcept {
+  template <typename T> [[nodiscard]] inline auto cross_product( const T & a, const T & b ) noexcept {
     constexpr bool is_2d_vector =
         std::is_same<T, vec2_t<typename _nmu_internal::type_unwrapper<T>::template param_t<0>>>::value;
 
@@ -102,7 +102,7 @@ namespace nmu {
     }
   }
 
-  template <typename T> [[nodiscard]] forceinline auto distance( const T & a, const T & b ) noexcept {
+  template <typename T> [[nodiscard]] inline auto distance( const T & a, const T & b ) noexcept {
     constexpr bool is_2d_vector =
         std::is_same<T, vec2_t<typename _nmu_internal::type_unwrapper<T>::template param_t<0>>>::value;
 
@@ -139,7 +139,7 @@ using color_t = nmu::color_t;
 #define deg2rad nmu::deg2rad
 
 // clang-format: off
-// @formatter:off`
+// @formatter:off
 
 #define color_from_float_a( variable, ... ) \
   variable.from<float, float, float, float, float>( __VA_ARGS__ )
